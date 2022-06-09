@@ -1,18 +1,20 @@
 #include <cstdlib>
 #include <stdio.h>
 
-void vet_q4(int *vetorzao, int tamVetorzao){ // passar como parametros o vetorzao e o tamanho dele
-    int maior = vetorzao[0], menor = vetorzao[0], nPares=0, nImpares=0;
-
-    for(int i=1; i<tamVetorzao; i++){
-        if (maior < vetorzao[i]) // Comparação de um elemento com o próximo p/ saber qual o maior
-            maior = vetorzao[i];
-        if (menor > vetorzao[i]) // comparação de um elemento com o próximo p/ saber qual o menor
-            menor = vetorzao[i];
-        if (vetorzao[i-1]%2 == 0) // verifica se é par ou impar
-            nPares++; // caso seja par incrementar o contador de nº pares
-        else
-            nImpares++; // caso contrario incrementa o contador de nº ímpares
+void mat_q4(int **m, int qtdLinhas, int qtdColunas){ // passar como parametros o vetorzao e o tamanho dele
+    int maior = m[0][0], menor = m[0][0], nPares=0, nImpares=0;
+    
+    for (int l = 0; l < qtdLinhas; l++) {
+        for(int c=1; c<qtdColunas; c++){
+            if (maior < m[l][c]) // Comparação de um elemento com o próximo p/ saber qual o maior
+                maior = m[l][c];
+            if (menor > m[l][c]) // comparação de um elemento com o próximo p/ saber qual o menor
+                menor = m[l][c];
+            if (m[l][c-1]%2 == 0) // verifica se é par ou impar
+                nPares++; // caso seja par incrementar o contador de nº pares
+            else
+                nImpares++; // caso contrario incrementa o contador de nº ímpares
+        }
     }
     printf("O maior eh %d e o menor eh %d, tem %d numeros pares e %d impares\n", maior, menor, nPares, nImpares);
 }
@@ -82,7 +84,9 @@ int main(){
     for (int i = 0; i < qtd; i++) { // Fazer a impressão das matrizes
         printf("\n");
         printM(m[i].m, m[i].qtdLinhas, m[i].qtdColunas);
+        mat_q4(m[i].m, m[i].qtdLinhas, m[i].qtdColunas);
     }
+
 
     return 0;
 
