@@ -29,10 +29,10 @@ void mat_q1(int **m, int qtdLinhas, int qtdColunas){ // Função p/ transformar 
 
 void mat_q2(int **m, int qtdLinhas, int qtdColunas){
     int qtd;
-    char opc = 'l';
+    char opc = 'c';
 
     //printf("Você deseja adicionar uma linha ou uma coluna ( L/C )? ");
-    //scanf("%d", &opct);
+    //scanf("%d", &opct); 
 
     printf("Quantas você deseja adicionar? ");
     scanf("%d", &qtd);
