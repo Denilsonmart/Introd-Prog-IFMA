@@ -14,7 +14,7 @@ typedef struct matriz{
 void lerMatrizes(Matriz *matriz, int qtdMatrizes){ // Função p/ preencher a matriz com dados do usuário
 
     for (int i = 0; i < qtdMatrizes; i++) { // Percorre o vetor de matrizes
-        printf("\n---PREENCHER MATRIZ %d---\n\n", i);
+        printf("\n---PREENCHER MATRIZ %d---\n\n", i+1);
         for (int l = 0; l < matriz[i].qtdLinhas; l++) { // Percorre as matrizes armazenadas
             for (int c = 0; c < matriz[i].qtdColunas; c++) {
                 int val;
@@ -31,10 +31,10 @@ Matriz* alocaAllM(Matriz *matriz, int qtdMatrizes){
     matriz = (Matriz*)calloc(qtdMatrizes, sizeof(Matriz)); // Alocar o vetor de matrizes
 
     for (int i = 0; i < qtdMatrizes; i++) { // Percorre o vetor de matrizes
-        printf("Matriz %d:\n", i);
-        printf("Quantas linhas nessa budega? ");
+        printf("\nMatriz %d:\n", i+1);
+        printf("Quantas linhas? ");
         scanf("%d", &(matriz[i].qtdLinhas)); // Faz a atribuição das linhas de cada matriz no vetor
-        printf("Quantas colunas nessa budega? ");
+        printf("Quantas colunas? ");
         scanf("%d", &(matriz[i].qtdColunas)); // Faz a atribuição das coluans de cada matriz no vetor
 
         matriz[i].valor = (int**)calloc(matriz[i].qtdLinhas, sizeof(int*)); // Aloca as matrizes que estão dentro do vetor
@@ -47,38 +47,40 @@ Matriz* alocaAllM(Matriz *matriz, int qtdMatrizes){
 
 void printAllM(Matriz *matriz, int qtdMatrizes){ // Função p/ imprimir todas as matrizes q estão no vetor
 
-    printf("\n---IMPRIMINDO AS MATRIZES---\n\n");
     for (int i = 0; i < qtdMatrizes; i++) { // Percorre o vetor de matrizes
+        printf("Matriz %d:\n\n", i+1);
         for (int l = 0; l < matriz[i].qtdLinhas; l++) { // Percorre as matrizes armazenadas
+            printf("| ");
             for (int c = 0; c < matriz[i].qtdColunas; c++) {
                 printf("%d ", matriz[i].valor[l][c]); // Imprime os dados de cada matriz do vetor formatados
             }
-            printf("\n");
+            printf("|\n");
         }
         printf("\n");
     }
 }
 
-void mat_q1(int **m, int qtdLinhas, int qtdColunas){ // Função p/ transformar matriz em vetor
-    char opc = 'c'; // Forçando a condição de coluna p/ testes
+void mat_q1(Matriz matriz){ // Função p/ transformar matriz em vetor
+    char opc; // Forçando a condição de coluna p/ testes
 
-    printf("Você quer transformar linhas ou colunas ( L/C )? ");
-    //scanf("%c", &opc);
+    printf("\nVocê quer transformar linhas ou colunas ( L/C )? ");
+    scanf("%c", &opc);
+    scanf("%c", &opc);
 
     printf("\nMatriz tranformada em vetor: \n");
 
     if (opc == 'L' || opc == 'l'){ // Lógica p/ linhas
-        for (int l = 0; l < qtdLinhas; l++) { // Percorre as linhas da matriz
-            for (int c = 0; c < qtdColunas; c++) { // Percorre as colunas da matriz
-                printf("%d ", m[l][c]);
+        for (int l = 0; l < matriz.qtdLinhas; l++) { // Percorre as linhas da matriz
+            for (int c = 0; c < matriz.qtdColunas; c++) { // Percorre as colunas da matriz
+                printf("%d ", matriz.valor[l][c]);
             }
         }
     }
     
     else if (opc == 'C' || opc == 'c'){ // Lógica p/ colunas 
-        for (int c = 0; c < qtdColunas; c++) { // Percorre as colunas da matriz
-            for (int l = 0; l < qtdLinhas; l++) { // Percorre as linhas da matriz
-                printf("%d ", m[l][c]); // Imprime com a formatação de vetor
+        for (int c = 0; c < matriz.qtdColunas; c++) { // Percorre as colunas da matriz
+            for (int l = 0; l < matriz.qtdLinhas; l++) { // Percorre as linhas da matriz
+                printf("%d ", matriz.valor[l][c]); // Imprime com a formatação de vetor
             }
         }
     } 
@@ -87,10 +89,11 @@ void mat_q1(int **m, int qtdLinhas, int qtdColunas){ // Função p/ transformar 
 
 Matriz mat_q2S(Matriz matriz){ // Função p/ adicionar linhas ou colunas a uma matriz específica
     int qtd; // Quantidade de linhas ou colunas a serem adicionadas
-    char opc = 'c'; // Escolha do usuário se será linha ou coluna
+    char opc; // Escolha do usuário se será linha ou coluna
 
-    //printf("Você deseja adicionar uma linha ou uma coluna ( L/C )? ");
-    //scanf("%d", &opct); 
+    printf("Você deseja adicionar uma linha ou uma coluna ( L/C )? ");
+    scanf("%c", &opc);
+    scanf("%c", &opc); // utilizado p/ limpar o buffer do teclado devido a tecla enter
 
     printf("Quantas você deseja adicionar? ");
     scanf("%d", &qtd);
@@ -129,10 +132,11 @@ Matriz mat_q2S(Matriz matriz){ // Função p/ adicionar linhas ou colunas a uma 
 
 Matriz mat_q3S(Matriz matriz){
     int qtd;
-    char opc = 'c';
+    char opc;
 
-    //printf("Você deseja Remover uma linha ou uma coluna ( L/C )? ");
-    //scanf("%d", &opct);
+    printf("Você deseja Remover uma linha ou uma coluna ( L/C )? ");
+    scanf("%c", &opc);
+    scanf("%c", &opc); // Utilizado p/ limpar o buffe do teclado devido a tecla enter
 
     printf("Quantas você deseja Remover? ");
     scanf("%d", &qtd);
@@ -159,44 +163,111 @@ Matriz mat_q3S(Matriz matriz){
     return matriz;
 }
 
-void mat_q4(int **m, int qtdLinhas, int qtdColunas){ // passar como parametros o vetorzao e o tamanho dele
-    int maior = m[0][0], menor = m[0][0], nPares=0, nImpares=0;
+void mat_q4(Matriz matriz){ // passar como parametros o vetorzao e o tamanho dele
+    int maior = matriz.valor[0][0], menor = matriz.valor[0][0], nPares=0, nImpares=0;
     
-    for (int l = 0; l < qtdLinhas; l++) { // Percorre as linhas da matriz
-        for(int c=0; c<qtdColunas; c++){ // percorre as colunas da matriz
-            if (maior < m[l][c]) // Comparação de um elemento com o próximo p/ saber qual o maior
-                maior = m[l][c];
-            if (menor > m[l][c]) // comparação de um elemento com o próximo p/ saber qual o menor
-                menor = m[l][c];
-            if ((m[l][c] % 2) == 0) // verifica se é par ou impar
+    for (int l = 0; l < matriz.qtdLinhas; l++) { // Percorre as linhas da matriz
+        for(int c = 0; c < matriz.qtdColunas; c++){ // percorre as colunas da matriz
+            if (maior < matriz.valor[l][c]) // Comparação de um elemento com o próximo p/ saber qual o maior
+                maior = matriz.valor[l][c];
+            if (menor > matriz.valor[l][c]) // comparação de um elemento com o próximo p/ saber qual o menor
+                menor = matriz.valor[l][c];
+            if ((matriz.valor[l][c] % 2) == 0) // verifica se é par ou impar
                 nPares++; // caso seja par incrementar o contador de nº pares
             else
                 nImpares++; // caso contrario incrementa o contador de nº ímpares
         }
     }
-    printf("O maior eh %d e o menor eh %d, tem %d numeros pares e %d impares\n", maior, menor, nPares, nImpares);
+    printf("\n\nO maior é %d e o menor é %d, tem %d numeros pares e %d impares\n\n", maior, menor, nPares, nImpares);
+}
+
+void menu(){
+    printf("\n-------------------- MENU ---------------------\n");
+    printf("\n 1 - Imprimir matrizes armazenadas: \n");
+    printf("\n 2 - Transformação da matriz em vetor (linha ou coluna):\n");
+    printf("\n 3 - Adicionar novos elementos a uma matriz:\n");
+    printf("\n 4 - remover elementos de uma matriz:\n");
+    printf("\n 5 - Fornecer o maior, menor, quantidade de números ímpares e pares: \n");
+    printf("\n 6 - Encerrar programa: \n");
+}
+
+void delay(){
+    printf("pressione enter p/ continuar...");
+    getchar();
+    getchar();
+    system("clear");
 }
 
 int main(){
     Matriz *matriz; // Vetor de structs (Vetor de matrizes)
-    int qtdMatrizes; // Quantidade de matrizes a serem inseridas
+    int qtdMatrizes, opc, nMatriz; // Quantidade de matrizes a serem inseridas
 
-    printf("Quantas matrizes você quer?\n");
+    printf("\nQuantas matrizes você quer?\n");
     scanf("%d", &qtdMatrizes);
 
     matriz = alocaAllM(matriz, qtdMatrizes); // Aloca o vetor de matrizes e as matrizes que estão dentro dele
-    //lerMatrizes(m, qtdMatrizes);
-    printAllM(matriz, qtdMatrizes); // Imprime todas as matrizes inseridas no vetor
+    lerMatrizes(matriz, qtdMatrizes); // Função p/ q o usuário entre com os valores da matriz
 
-    //matriz[0] = mat_q2S(matriz[0]); // Teste de reatribuição de uma matriz (Struct) com novas linhas ou colunas
-    matriz[0] = mat_q3S(matriz[0]);
-    printAllM(matriz, qtdMatrizes); // Imprime todas as matrizes inseridas no vetor
-    //printf("Qntd de novas linhas: %d \n", matriz[0].qtdLinhas);
-    printf("Qntd de novas colunas: %d\n", matriz[0].qtdColunas);
+    while (opc != 6) {
+
+        menu();
+        printf("\nQue operação você deseja realizar? ");
+        scanf("%d", &opc);
+        printf("-----------------------------------------------\n");
+        system("clear");
+
+        switch (opc) {
+            case 1: 
+            
+                printAllM(matriz, qtdMatrizes);
+                delay();
+                break;
+
+            case 2:
+
+                printAllM(matriz, qtdMatrizes);
+                printf("\nEm qual matriz vocẽ deseja transformar em vetor? ");
+                scanf("%d", &nMatriz);
+                mat_q1(matriz[nMatriz-1]);
+                delay();
+                break;
+
+            case 3:
+
+                printAllM(matriz, qtdMatrizes);
+                printf("\nEm qual matriz vocẽ deseja adicionar novos elementos? ");
+                scanf("%d", &nMatriz);
+                matriz[nMatriz-1] = mat_q2S(matriz[nMatriz-1]);
+                delay();
+                break;
+
+            case 4: 
+
+                printAllM(matriz, qtdMatrizes);
+                printf("\nEm qual matriz vocẽ deseja remover elementos? ");
+                scanf("%d", &nMatriz);
+
+                matriz[nMatriz-1] = mat_q3S(matriz[nMatriz-1]);
+                delay();
+                break;
+
+            case 5:
+
+                printAllM(matriz, qtdMatrizes);
+                printf("\nEm qual matriz vocẽ deseja fazer essa operação? ");
+                scanf("%d", &nMatriz);
+                mat_q4(matriz[nMatriz-1]);
+                delay();
+                break;
+
+            case 6: break;
+
+            default: printf("opção inválida!");
+        }
+    }
         
     return 0;
 }
-
 
 
 
